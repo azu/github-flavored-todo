@@ -1,15 +1,15 @@
 <div class="timeline-comment-wrapper js-comment-container">
     <a href="/{{user.login}}"><img alt="{{user.login}}" class="timeline-comment-avatar"
-                        src="{{user.avatar_url}}"
-                        height="48"
-                        width="48"></a>
+                                   src="{{user.avatar_url}}"
+                                   height="48"
+                                   width="48"></a>
 
     <div class="timeline-comment owner-comment current-user">
-        <div class="timeline-comment-header ">
+        <div class="timeline-comment-header">
 
             <div class="timeline-comment-actions">
-                <a class="octicon octicon-pencil js-comment-edit-button" data-skip-pjax="" href="#"
-                   title="Edit comment" aria-label="Edit comment"></a>
+                <button class="octicon octicon-pencil js-comment-edit-button"
+                        v-on="click : toggleEdit(this, $event)"></button>
             </div>
 
             <span class="timeline-comment-label">Owner</span>
@@ -30,6 +30,9 @@
 
         <div class="comment-content">
             {{{body | marked}}}
+        </div>
+        <div>
+            <textarea v-attr="id:commentID" id="js-issue-comment"></textarea>
         </div>
     </div>
 </div>

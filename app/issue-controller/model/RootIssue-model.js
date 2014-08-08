@@ -4,6 +4,7 @@ var issueHeadObject = {
         "login": "user-name",
         "avatar_url": "https://avatars.githubusercontent.com/u/19714?v=2"
     },
+    id : 333333,
     "title": "issue title",
     "body": "Issue\n\n" +
         "- [x] Todo",
