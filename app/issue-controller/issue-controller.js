@@ -10,7 +10,7 @@ var commentsModel = new CommentsModel();
 var rootIssue = new RootIssueModel();
 function didLoad() {
     var templatePath = __dirname + "/view/";
-    var preview = new Vue({
+    var viewController = new Vue({
         el: '#editor',
         data: {
             "rootIssue": rootIssue.getRawData(),
@@ -21,15 +21,30 @@ function didLoad() {
         },
         methods: {
             toggleEdit: function (target, event) {
+                if (target.isEditing) {
+                    return;
+                }
+                target.isEditing = true;
                 var myTextArea = document.getElementById(target.commentID);
                 var myCodeMirror = CodeMirror.fromTextArea(myTextArea, {
                     value: target.body,
                     mode: "markdown"
                 });
+
+                function saveAndClose(cm) {
+                    target.isEditing = false;
+                    target.body = cm.getValue();
+                    cm.toTextArea();
+                }
+
                 myCodeMirror.addKeyMap({
+                    "Ctrl-Enter": function (cm) {
+                        saveAndClose(cm);
+                    },
                     "Cmd-Enter": function (cm) {
+                        target.isEditing = false;
                         target.body = cm.getValue();
-                        cm.toTextArea()
+                        cm.toTextArea();
                     }
                 });
                 myCodeMirror.setValue(target.body);
