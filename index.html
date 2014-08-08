@@ -8,7 +8,10 @@
 </head>
 <body>
 <div id="editor">
-    <div v-component="comment" v-with="issue"></div>
+    <header>
+        <div v-component="issue-header" v-with="rootIssue"></div>
+    </header>
+    <div v-component="comment" v-with="rootIssue"></div>
     <div v-component="comment" v-repeat="comments"></div>
 </div>
 <script>
