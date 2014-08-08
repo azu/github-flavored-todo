@@ -1,0 +1,36 @@
+<div class="timeline-comment-wrapper js-comment-container">
+    <a href="/azu"><img alt="azu" class="timeline-comment-avatar" data-user="19714"
+                        src="https://avatars0.githubusercontent.com/u/19714?v=2&amp;s=96" height="48"
+                        width="48"></a>
+
+    <div class="timeline-comment owner-comment current-user">
+        <div class="timeline-comment-header ">
+
+            <div class="timeline-comment-actions">
+                <a class="octicon octicon-pencil js-comment-edit-button" data-skip-pjax="" href="#"
+                   title="Edit comment" aria-label="Edit comment"></a>
+            </div>
+
+            <span class="timeline-comment-label">Owner</span>
+
+
+            <div class="timeline-comment-header-text">
+                <strong>
+                    <a href="/azu" class="author">{{user.login}}</a>
+                </strong>
+
+                commented
+
+                <a href="#issue-33843903" class="timestamp">
+                    <time title="2014年5月20日 7:34 JST" datetime="2014-05-19T15:34:44-07:00" is="relative-time">3
+                        months ago
+                    </time>
+                </a>
+            </div>
+        </div>
+
+        <div class="comment-content">
+            {{{body | marked}}}
+        </div>
+    </div>
+</div>

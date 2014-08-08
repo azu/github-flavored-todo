@@ -8,20 +8,8 @@
 </head>
 <body>
 <div id="editor">
-    <div id="issue"></div>
-    <header >
-        <h1>{{issue.title}}</h1>
-
-        <div class="markdown">
-            {{{issue.body |marked}}}
-        </div>
-    </header>
-    <div id="comments" v-repeat="comments">
-        <div class="issue--comment">
-            <h2>@{{user.login}}</h2>
-            {{{body | marked}}}
-        </div>
-    </div>
+    <div v-component="comment" v-with="issue"></div>
+    <div v-component="comment" v-repeat="comments"></div>
 </div>
 <script>
     require("./app/index.js");
