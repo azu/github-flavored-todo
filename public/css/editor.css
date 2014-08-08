@@ -1,3 +1,0 @@
-@charset "UTF-8";
-.markdown--checkbox__checked::before {
-  content: "✓"; }
