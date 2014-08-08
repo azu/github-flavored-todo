@@ -6,8 +6,8 @@ var renderer = new marked.Renderer();
 renderer.listitem = function (text) {
     if (/^\s*\[[x ]\]\s*/.test(text)) {
         text = text
-            .replace(/^\s*\[ \]\s*/, '<input class="markdown-task-checkbox" type="checkbox" checked>')
-            .replace(/^\s*\[x\]\s*/, '<input class="markdown-task-checkbox" type="checkbox">');
+            .replace(/^\s*\[ \]\s*/, '<input class="markdown-task-checkbox" type="checkbox">')
+            .replace(/^\s*\[x\]\s*/, '<input class="markdown-task-checkbox" type="checkbox" checked>');
         return '<li class="task-list-item enabled">' + text + '</li>';
     } else {
         return '<li>' + text + '</li>';
