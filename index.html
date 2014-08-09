@@ -12,8 +12,10 @@
 
 </header>
 <div class="main-body">
-    <div class="main-sidebar">
-        SIDE BAR
+    <div id="js-main-sidebar" class="main-sidebar">
+        <ul>
+            <li v-component="issueListItem" v-repeat="rootIssueList"></li>
+        </ul>
     </div>
     <div id="js-main-content" class="main-content">
         <header>

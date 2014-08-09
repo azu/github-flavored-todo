@@ -9,8 +9,11 @@ var commentsModel = new CommentsModel();
 var rootIssue = new RootIssueModel();
 
 function IssueController() {
+    /**
+     * @type {Vue|null}
+     */
     this.viewControler = null;
-    this.viewLoad();
+    this.loadView();
 }
 /**
  *
@@ -22,7 +25,7 @@ IssueController.prototype.updateWithTuple = function (data) {
     this.viewController.comments = commentsModel.getRawData();
     this.viewController.rootIssue = rootIssue.getRawData();
 };
-IssueController.prototype.viewLoad = function () {
+IssueController.prototype.loadView = function () {
     this.viewController = new Vue({
         el: '#js-main-content',
         data: {
