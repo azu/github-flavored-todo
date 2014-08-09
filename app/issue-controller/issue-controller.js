@@ -1,6 +1,5 @@
 "use strict";
 var Vue = require("vue");
-var fs = require("fs");
 var CodeMirror = require("codemirror");
 require('codemirror/mode/markdown/markdown');
 var marked = require("./lib/marked-nit");
@@ -9,7 +8,6 @@ var RootIssueModel = require("./model/RootIssue-model");
 var commentsModel = new CommentsModel();
 var rootIssue = new RootIssueModel();
 function didLoad() {
-    var templatePath = __dirname + "/view/";
     var viewController = new Vue({
         el: '#js-main-content',
         data: {
@@ -60,9 +58,7 @@ function didLoad() {
             }
         },
         components: {
-            "issue-header": {
-                template: fs.readFileSync(templatePath + "issue-header.html", "utf-8")
-            },
+            "issue-header": require("./vue-component/issue-header"),
             "comment": require("./vue-component/comment-component")
         }
     });
