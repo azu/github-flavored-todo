@@ -1,3 +1,6 @@
+@import "github-markdown";
+@import "codemirror";
+
 %left-avatar {
   margin-right: 1em;
   padding: 0.1em;
@@ -15,7 +18,12 @@
   }
   // body
   .timeline-comment {
-    @extend %right-content
+    @extend %right-content;
+  }
+  // apply markdown style
+  .comment-content{
+    padding: 0.5em;
+    @extend .markdown-body;
   }
 }
 

@@ -13,6 +13,7 @@ function didLoad() {
     var viewController = new Vue({
         el: '#js-main-content',
         data: {
+            "editingComments": [],
             "rootIssue": rootIssue.getRawData(),
             "comments": commentsModel.getRawData()
         },
@@ -20,19 +21,26 @@ function didLoad() {
             marked: marked
         },
         methods: {
-            toggleEdit: function (target, event) {
-                if (target.isEditing) {
+            isEditing: function (target) {
+                return this.editingComments.indexOf(target) !== -1;
+            },
+            editComment: function (target, event) {
+                if (this.editingComments.indexOf(target) !== -1) {
                     return;
                 }
-                target.isEditing = true;
+                this.editingComments.push(target);
                 var myTextArea = document.getElementById(target.commentID);
                 var myCodeMirror = CodeMirror.fromTextArea(myTextArea, {
                     value: target.body,
                     mode: "markdown"
                 });
+                var that = this;
 
                 function saveAndClose(cm) {
-                    target.isEditing = false;
+                    var indexOf = that.editingComments.indexOf(target);
+                    if (indexOf != -1) {
+                        that.editingComments.splice(indexOf, 1);
+                    }
                     target.body = cm.getValue();
                     cm.toTextArea();
                 }
@@ -42,12 +50,13 @@ function didLoad() {
                         saveAndClose(cm);
                     },
                     "Cmd-Enter": function (cm) {
-                        target.isEditing = false;
-                        target.body = cm.getValue();
-                        cm.toTextArea();
+                        saveAndClose(cm)
                     }
                 });
                 myCodeMirror.setValue(target.body);
+                Vue.nextTick(function () {
+                    myCodeMirror.focus();
+                });
             }
         },
         components: {

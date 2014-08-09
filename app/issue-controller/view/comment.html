@@ -4,7 +4,7 @@
                                    height="48"
                                    width="48"></a>
 
-    <div class="timeline-comment owner-comment current-user">
+    <div class="timeline-comment owner-comment current-user" v-on="dblclick : editComment(this, $event)">
         <div class="timeline-comment-header">
             <div class="timeline-comment-header-text">
                 <strong>
@@ -19,11 +19,11 @@
             </div>
             <div class="timeline-comment-actions">
                 <button class="octicon octicon-pencil js-comment-edit-button"
-                        v-on="click : toggleEdit(this, $event)"></button>
+                        v-on="click : editComment(this, $event)"></button>
             </div>
         </div>
 
-        <div class="comment-content">
+        <div class="comment-content" v-show="!isEditing(this)">
             {{{body | marked}}}
         </div>
         <div>
