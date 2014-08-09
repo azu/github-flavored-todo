@@ -11,11 +11,11 @@ var issueHeadObject = {
     "created_at": "2014-05-23T00:12:21Z",
     "updated_at": "2014-05-23T00:12:37Z"
 };
-function IssueHeadModel() {
+function RootIssueModel() {
     this.issueHead = issueHeadObject;
 }
-IssueHeadModel.prototype.getRawData = function () {
+RootIssueModel.prototype.getRawData = function () {
     return this.issueHead;
 };
 
-module.exports = IssueHeadModel;
+module.exports = RootIssueModel;

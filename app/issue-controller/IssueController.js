@@ -7,8 +7,23 @@ var CommentsModel = require("./model/Comments-model");
 var RootIssueModel = require("./model/RootIssue-model");
 var commentsModel = new CommentsModel();
 var rootIssue = new RootIssueModel();
-function didLoad() {
-    var viewController = new Vue({
+
+function IssueController() {
+    this.viewControler = null;
+    this.viewLoad();
+}
+/**
+ *
+ * @param {{rootIssue: RootIssueModel, commentsModel : CommentsModel}} data
+ */
+IssueController.prototype.updateWithTuple = function (data) {
+    var rootIssue = data.rootIssue;
+    var commentsModel = data.commentsModel;
+    this.viewController.comments = commentsModel.getRawData();
+    this.viewController.rootIssue = rootIssue.getRawData();
+};
+IssueController.prototype.viewLoad = function () {
+    this.viewController = new Vue({
         el: '#js-main-content',
         data: {
             "editingComments": [],
@@ -62,5 +77,5 @@ function didLoad() {
             "comment": require("./vue-component/comment-component")
         }
     });
-}
-module.exports = didLoad;
+};
+module.exports = IssueController;
