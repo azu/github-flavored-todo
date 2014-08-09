@@ -3,17 +3,9 @@
                                    v-attr="src:user.avatar_url"
                                    height="48"
                                    width="48"></a>
+
     <div class="timeline-comment owner-comment current-user">
         <div class="timeline-comment-header">
-
-            <div class="timeline-comment-actions">
-                <button class="octicon octicon-pencil js-comment-edit-button"
-                        v-on="click : toggleEdit(this, $event)"></button>
-            </div>
-
-            <span class="timeline-comment-label">Owner</span>
-
-
             <div class="timeline-comment-header-text">
                 <strong>
                     <a href="/azu" class="author">{{user.login}}</a>
@@ -25,13 +17,17 @@
                     months ago
                 </time>
             </div>
+            <div class="timeline-comment-actions">
+                <button class="octicon octicon-pencil js-comment-edit-button"
+                        v-on="click : toggleEdit(this, $event)"></button>
+            </div>
         </div>
 
         <div class="comment-content">
             {{{body | marked}}}
         </div>
         <div>
-            <textarea v-attr="id:commentID" id="js-issue-comment" class="placeholder-editor"></textarea>
+            <textarea v-attr="id:commentID" id="js-issue-comment" class="placeholder-editor hidden"></textarea>
         </div>
     </div>
 </div>

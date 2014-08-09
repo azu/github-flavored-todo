@@ -14,12 +14,16 @@
         "tests"
     ],
     "dependencies": {
-        "octicons": "~2.1.1"
+        "octicons": "~2.1.1",
+        "modularized-normalize-scss": "~3.0.1",
+        "bourbon": "~4.0.2"
     },
     "install": {
         "path": "public/css/vendor",
         "sources": {
-            "octicons": "bower_components/octicons/octicons/*"
+            "octicons": "bower_components/octicons/octicons/*",
+            "bourbon": "bower_components/bourbon/dist/**/*.scss",
+            "modularized-normalize-scss": "bower_components/modularized-normalize-scss/**/*.scss"
         }
     }
 }

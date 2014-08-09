@@ -1,0 +1,29 @@
+%left-avatar {
+  margin-right: 1em;
+  padding: 0.1em;
+}
+
+%right-content {
+  flex: 1;
+}
+
+.timeline-comment-wrapper {
+  display: flex;
+  align-items: flex-start;
+  .timeline-comment-avatar {
+    @extend %left-avatar
+  }
+  // body
+  .timeline-comment {
+    @extend %right-content
+  }
+}
+
+.timeline-comment-header {
+  display: flex;
+  .timeline-comment-header-text {
+    flex: 1;
+  }
+  .timeline-comment-actions {
+  }
+}

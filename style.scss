@@ -1,6 +1,11 @@
 @charset "UTF-8";
+// vendar
+@import "public/css/vendor/modularized-normalize-scss/normalize";
 // base
 @import "public/css/base/index";
 // layout
 @import "public/css/layout/index";
 
+// component
+@import "app/issue-controller/css/comment";
+@import "app/issue-controller/css/issue-header";

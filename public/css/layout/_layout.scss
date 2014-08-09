@@ -3,27 +3,15 @@
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-}
 
+}
 .main-body {
   display: flex;
-  flex: 1;
-  .main-body {
-    display: flex;
-    flex: 1;
-  }
+  min-height: 100vh;
   .main-content {
     flex: 1;
   }
-
   .main-sidebar {
-    /* 12em is the width of the columns */
-    flex: 0 0 12em;
-  }
-
-  .HolyGrail-nav {
-    /* put the nav on the left */
-    order: -1;
+    width: 12em;
   }
 }
-

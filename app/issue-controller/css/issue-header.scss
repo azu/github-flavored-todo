@@ -1,0 +1,24 @@
+%left-flexible-title {
+  flex: 1;
+}
+
+%right-fixed-edit {
+  color: gray;
+  order: 1;
+}
+
+%vertical-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gh-header-show {
+  display: flex;
+  .gh-header-title {
+    @extend %left-flexible-title;
+  }
+  .gh-header-actions {
+    @extend %right-fixed-edit, %vertical-center;
+  }
+}
