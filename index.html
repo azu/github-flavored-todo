@@ -3,19 +3,31 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>github-flavored-todo</title>
-    <link rel="stylesheet" href="public/css/github.css">
-    <link rel="stylesheet" href="public/css/main.css"/>
+    <link rel="stylesheet" href="style.css"/>
     <link rel="stylesheet" href="public/css/vendor/octicons/octicons.css"/>
     <link rel="stylesheet" href="node_modules/codemirror/lib/codemirror.css"/>
 </head>
-<body>
-<div id="editor">
-    <header>
-        <div v-component="issue-header" v-with="rootIssue"></div>
-    </header>
-    <div v-component="comment" v-with="rootIssue"></div>
-    <div v-component="comment" v-repeat="comments"></div>
+<body class="layout-body-wrapper">
+<header>
+
+</header>
+<div class="main-body">
+    <aside>
+        <div class="main-sidebar">
+            SIDE BAR
+        </div>
+    </aside>
+    <article>
+        <div id="js-main-content" class="main-content">
+            <header>
+                <div v-component="issue-header" v-with="rootIssue"></div>
+            </header>
+            <div v-component="comment" v-with="rootIssue"></div>
+            <div v-component="comment" v-repeat="comments"></div>
+        </div>
+    </article>
 </div>
+<script src="app/debug-controller/debug-controller.js"></script>
 <script>
     require("./app/index.js");
 </script>

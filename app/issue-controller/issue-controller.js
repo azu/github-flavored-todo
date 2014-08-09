@@ -11,7 +11,7 @@ var rootIssue = new RootIssueModel();
 function didLoad() {
     var templatePath = __dirname + "/view/";
     var viewController = new Vue({
-        el: '#editor',
+        el: '#js-main-content',
         data: {
             "rootIssue": rootIssue.getRawData(),
             "comments": commentsModel.getRawData()
@@ -54,7 +54,7 @@ function didLoad() {
             "issue-header": {
                 template: fs.readFileSync(templatePath + "issue-header.html", "utf-8")
             },
-            "comment": require("./component/comment-component")
+            "comment": require("./vue-component/comment-component")
         }
     });
 }
