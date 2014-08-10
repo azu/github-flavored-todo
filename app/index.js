@@ -10,3 +10,6 @@ var issueController = new IssueController();
 // list
 var SavedIssueListController = require("./saved-issue-list-controller/SavedIssueListController");
 var savedIssueListController = new SavedIssueListController();
+savedIssueListController.addClickHandler(function (issueItemObject) {
+    issueController.updateWithIssueItemObject(issueItemObject);
+});

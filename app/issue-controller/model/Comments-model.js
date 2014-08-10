@@ -10,8 +10,8 @@ var commentObject = {
     "updated_at": "2014-05-23T00:12:37Z"
 };
 
-function CommentsModel() {
-    this.comments = require("../../../test/fixtures/comments.json");
+function CommentsModel(comments) {
+    this.comments = comments || [commentObject];
 }
 CommentsModel.prototype.getRawData = function () {
     return this.comments;

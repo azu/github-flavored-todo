@@ -5,8 +5,8 @@ require('codemirror/mode/markdown/markdown');
 var marked = require("./lib/marked-nit");
 var CommentsModel = require("./model/Comments-model");
 var RootIssueModel = require("./model/RootIssue-model");
-var commentsModel = new CommentsModel();
-var rootIssue = new RootIssueModel();
+var commentsModel = new CommentsModel(require("../../data/local/1/comments.json"));
+var rootIssue = new RootIssueModel(require("../../data/local/1/issue.json"));
 
 function IssueController() {
     /**
@@ -19,11 +19,11 @@ function IssueController() {
  *
  * @param {IssueItemObject} data
  */
-IssueController.prototype.updateWithTuple = function (data) {
+IssueController.prototype.updateWithIssueItemObject = function (data) {
     var rootIssue = data.rootIssue;
     var commentsModel = data.comments;
-    this.viewController.comments = commentsModel.getRawData();
-    this.viewController.rootIssue = rootIssue.getRawData();
+    this.viewController.$set("rootIssue", rootIssue.getRawData());
+    this.viewController.$set("comments", commentsModel.getRawData());
 };
 IssueController.prototype.loadView = function () {
     this.viewController = new Vue({
