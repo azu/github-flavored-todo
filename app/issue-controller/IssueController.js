@@ -30,27 +30,29 @@ IssueController.prototype.loadView = function () {
         el: '#js-main-content',
         data: {
             "editingComments": [],
-            "rootIssue": rootIssue.getRawData(),
-            "comments": commentsModel.getRawData()
+            "rootIssue": rootIssue,
+            "comments": []
         },
         filters: {
-            marked: marked
+            marked: function (text) {
+                if (text == null) {
+                    return "";
+                }
+                return marked(text);
+            }
         },
         methods: {
             isEditing: function (target) {
                 return this.editingComments.indexOf(target) !== -1;
             },
             editComment: function (target, event) {
+                var that = this;
                 if (this.editingComments.indexOf(target) !== -1) {
                     return;
                 }
                 this.editingComments.push(target);
-                var myTextArea = document.getElementById(target.commentID);
-                var myCodeMirror = CodeMirror.fromTextArea(myTextArea, {
-                    value: target.body,
-                    mode: "markdown"
-                });
-                var that = this;
+                var myTextArea = document.getElementById("js-issue-comment-" + target.id);
+                var myCodeMirror = CodeMirror.fromTextArea(myTextArea);
 
                 function saveAndClose(cm) {
                     var indexOf = that.editingComments.indexOf(target);
@@ -69,8 +71,8 @@ IssueController.prototype.loadView = function () {
                         saveAndClose(cm)
                     }
                 });
-                myCodeMirror.setValue(target.body);
                 Vue.nextTick(function () {
+                    myCodeMirror.setValue(target.body);
                     myCodeMirror.focus();
                 });
             }
