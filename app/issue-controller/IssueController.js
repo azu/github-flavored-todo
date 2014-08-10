@@ -1,13 +1,13 @@
 "use strict";
 var Vue = require("vue");
 var CodeMirror = require("codemirror");
+var Promise = require("bluebird");
 require('codemirror/mode/markdown/markdown');
 var marked = require("./lib/marked-nit");
 var CommentsModel = require("./model/Comments-model");
 var RootIssueModel = require("./model/RootIssue-model");
-var commentsModel = new CommentsModel(require("../../data/local/1/comments.json"));
 var rootIssue = new RootIssueModel(require("../../data/local/1/issue.json"));
-
+var dataManager = require("../data-manager/data-manager");
 function IssueController() {
     /**
      * @type {Vue|null}
@@ -22,17 +22,49 @@ function IssueController() {
 IssueController.prototype.updateWithIssueItemObject = function (data) {
     var rootIssue = data.rootIssue && data.rootIssue.getRawData();
     var commentsModel = data.comments ? data.comments.getRawData() : [];
-    this.viewController.$set("rootIssue", rootIssue);
-    this.viewController.$set("comments", commentsModel);
+    var that = this;
+    this.silentUpdate(function () {
+        that.viewController.$set("rootIssue", rootIssue);
+        that.viewController.$set("comments", commentsModel);
+    });
+};
+IssueController.prototype.registerSaveObserve = function (vm) {
+    function saveData() {
+        var rootIssue = vm.$data.rootIssue;
+        var comments = vm.$data.comments;
+        dataManager.writeData("./data/local/9", {
+            rootIssue: JSON.stringify(rootIssue),
+            comments: JSON.stringify(comments)
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }
+
+    vm.$watch('rootIssue', function (value) {
+        saveData();
+    });
+    vm.$watch('comments', function (value) {
+        saveData();
+    });
+};
+IssueController.prototype.silentUpdate = function (action) {
+    this.viewController.$unwatch("rootIssue");
+    this.viewController.$unwatch("comments");
+    action();
+    this.registerSaveObserve(this.viewController);
 };
 IssueController.prototype.loadView = function () {
+    var that = this;
     this.viewController = new Vue({
         el: '#js-main-content',
         data: {
             "editedIssue": null,
             "editingComments": [],
-            "rootIssue": rootIssue,
+            "rootIssue": {},
             "comments": []
+        },
+        ready: function () {
+            that.registerSaveObserve(this);
         },
         filters: {
             marked: function (text) {

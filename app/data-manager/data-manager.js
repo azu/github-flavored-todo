@@ -2,7 +2,7 @@
 /**
  * @typedef {{rootIssue: RootIssueModel, comments : CommentsModel}} IssueItemObject
  */
-var fs = require("fs");
+var fs = require("fs-extra");
 var path = require("path");
 var FS = require("q-io/fs");
 var Promise = require("bluebird");
@@ -63,7 +63,7 @@ function writeData(dirPath, issueItemObject) {
     updateLastModified(dirPath);
     var commentsPromise = new Promise(function (resolve, reject) {
         var commentsPath = path.join(dirPath, "comments.json");
-        fs.writeFile(commentsPath, issueItemObject.comments, function (error, data) {
+        fs.outputFile(commentsPath, issueItemObject.comments, function (error, data) {
             if (error) {
                 reject(error);
             } else {
@@ -73,7 +73,7 @@ function writeData(dirPath, issueItemObject) {
     });
     var issuePromise = new Promise(function (resolve, reject) {
         var issuePath = path.join(dirPath, "issue.json");
-        fs.writeFile(issuePath, issueItemObject.rootIssue, function (error, data) {
+        fs.outputFile(issuePath, issueItemObject.rootIssue, function (error, data) {
             if (error) {
                 reject(error);
             } else {
