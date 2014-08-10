@@ -4,6 +4,14 @@ var gui = window.require('nw.gui');
 gui.Window.get().showDevTools();
 require("./node-webkit/workaround")();
 require("./node-webkit/menu")(gui);
+// header
+var CreateIssueController = require("./create-issue-controller/create-issue-controller");
+var createIssueController = new CreateIssueController();
+createIssueController.addCreateIssueHandler(function (rootIssueObject) {
+    issueController.updateWithIssueItemObject({
+        rootIssue: rootIssueObject
+    });
+});
 // content
 var IssueController = require("./issue-controller/IssueController");
 var issueController = new IssueController();

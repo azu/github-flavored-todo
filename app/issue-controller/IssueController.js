@@ -20,10 +20,10 @@ function IssueController() {
  * @param {IssueItemObject} data
  */
 IssueController.prototype.updateWithIssueItemObject = function (data) {
-    var rootIssue = data.rootIssue;
-    var commentsModel = data.comments;
-    this.viewController.$set("rootIssue", rootIssue.getRawData());
-    this.viewController.$set("comments", commentsModel.getRawData());
+    var rootIssue = data.rootIssue && data.rootIssue.getRawData();
+    var commentsModel = data.comments ? data.comments.getRawData() : [];
+    this.viewController.$set("rootIssue", rootIssue);
+    this.viewController.$set("comments", commentsModel);
 };
 IssueController.prototype.loadView = function () {
     this.viewController = new Vue({
