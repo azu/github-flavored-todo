@@ -5,8 +5,6 @@ var Promise = require("bluebird");
 require('codemirror/mode/markdown/markdown');
 var marked = require("./lib/marked-nit");
 var CommentsModel = require("./model/Comments-model");
-var RootIssueModel = require("./model/RootIssue-model");
-var rootIssue = new RootIssueModel(require("../../data/local/1/issue.json"));
 var dataManager = require("../data-manager/data-manager");
 function IssueController() {
     /**
@@ -32,7 +30,7 @@ IssueController.prototype.registerSaveObserve = function (vm) {
     function saveData() {
         var rootIssue = vm.$data.rootIssue;
         var comments = vm.$data.comments;
-        dataManager.writeData("./data/local/9", {
+        dataManager.writeData("./data/local/" + rootIssue.id, {
             rootIssue: JSON.stringify(rootIssue),
             comments: JSON.stringify(comments)
         }).catch(function (error) {

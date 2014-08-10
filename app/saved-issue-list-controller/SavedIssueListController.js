@@ -1,6 +1,7 @@
 "use strict";
 var Vue = require("vue");
 var assert = require("assert");
+var fs = require("fs");
 var FS = require("q-io/fs");
 var path = require("path");
 var Promise = require("bluebird");
@@ -53,14 +54,12 @@ SavedIssueListController.prototype.loadView = function () {
             loadIssue: function (object) {
                 assert(typeof that.clickHandeler === "function");
                 var commentsPath = path.dirname(object.filePath);
-                FS.read(path.join(commentsPath, "comments.json"))
-                    .then(JSON.parse)
-                    .then(function (comments) {
-                        that.clickHandeler({
-                            rootIssue: new RootIssueModel(object.rootIssue),
-                            comments: new CommentsModel(comments)
-                        });
-                    });
+                var data = fs.readFileSync(path.join(commentsPath, "comments.json"), "utf-8");
+                var comments = JSON.parse(data);
+                that.clickHandeler({
+                    rootIssue: new RootIssueModel(object.rootIssue),
+                    comments: new CommentsModel(comments)
+                });
             }
         },
         components: {

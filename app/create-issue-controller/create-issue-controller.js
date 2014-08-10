@@ -5,6 +5,7 @@
 "use strict";
 var Vue = require("vue");
 var assert = require("assert");
+var issueCounter = require("../data-manager/issue-counter");
 var RootIssue = require("../issue-controller/model/RootIssue-model");
 function CreateIssueController() {
     this.viewController = null;
@@ -24,6 +25,7 @@ CreateIssueController.prototype.loadView = function () {
         methods: {
             createIssue: function () {
                 assert(typeof that.createIssueHandler === "function");
+                issueCounter.increment();
                 var rootIssue = new RootIssue({
                     "user": {
                         "login": "user-name",
@@ -31,7 +33,7 @@ CreateIssueController.prototype.loadView = function () {
                     },
                     title: "",
                     body: "",
-                    id: 333333,
+                    id: "local-" + issueCounter.getCount(),
                     "created_at": new Date(),
                     "updated_at": new Date()
                 });
