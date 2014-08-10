@@ -32,8 +32,9 @@ describe("data-manager", function () {
         describe("localstorage", function () {
             it("write path as key, value is date", function () {
                 dataManager.writeData(tmpDir, issueItemObject);
-                assert(storage.getItem(tmpDir) != null);
-                assert(storage.getItem(tmpDir)["last-modified"] instanceof Date);
+                var items = dataManager.getSavedIssueItems();
+                assert(items[tmpDir] != null);
+                assert(items[tmpDir]["last-modified"] != null);
             });
         });
         describe("write file", function () {
@@ -42,8 +43,7 @@ describe("data-manager", function () {
                 assert(promise instanceof Promise);
             });
             it("write path as key, value is date", function () {
-                dataManager.writeData(tmpDir, issueItemObject);
-
+                return shouldFulfilled(dataManager.writeData(tmpDir, issueItemObject));
             });
         });
     });

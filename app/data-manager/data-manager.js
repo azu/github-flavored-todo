@@ -8,6 +8,17 @@ var Promise = require("bluebird");
 var storage = (typeof localStorage !== "undefined") ? localStorage : null;
 var RootIssueModel = require("../issue-controller/model/RootIssue-model");
 var CommentsModel = require("../issue-controller/model/Comments-model");
+
+function getSavedIssueItems() {
+    var item = storage.getItem("saved-issue-items");
+    if (item != null) {
+        return JSON.parse(item);
+    }
+    return {};
+}
+function storeIssueItems(items) {
+    storage.setItem("saved-issue-items", JSON.stringify(items))
+}
 /**
  * save issueItemObject
  * issue.json and comments.json
@@ -16,9 +27,11 @@ var CommentsModel = require("../issue-controller/model/Comments-model");
  * @returns {Promise}
  */
 function writeData(dirPath, issueItemObject) {
-    storage.setItem(dirPath, {
+    var items = getSavedIssueItems();
+    items[dirPath] = {
         "last-modified": new Date()
-    });
+    };
+    storeIssueItems(items);
     var commentsPromise = new Promise(function (resolve, reject) {
         var commentsPath = path.join(dirPath, "comments.json");
         fs.writeFile(commentsPath, issueItemObject.comments, function (error, data) {
@@ -85,6 +98,8 @@ function changeStorage(storageObject) {
     storage = storageObject;
 }
 module.exports = {
+    getSavedIssueItems:getSavedIssueItems,
+    storeIssueItems:storeIssueItems,
     changeStorage: changeStorage,
     writeData: writeData,
     readData: readData
