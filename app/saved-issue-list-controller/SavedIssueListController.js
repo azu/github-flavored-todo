@@ -5,8 +5,6 @@ var fs = require("fs");
 var FS = require("q-io/fs");
 var path = require("path");
 var Promise = require("bluebird");
-var CommentsModel = require("../issue-controller/model/Comments-model");
-var RootIssueModel = require("../issue-controller/model/RootIssue-model");
 
 var dataManager = require("../data-manager/data-manager");
 function SavedIssueListController() {
@@ -18,6 +16,13 @@ function SavedIssueListController() {
     this.loadView();
     this.reloadData();
 }
+/**
+ *
+ * @param {IssueItemObject} issueItemObject
+ */
+SavedIssueListController.prototype.insertNewIssue = function(issueItemObject) {
+    this.viewController.rootIssueList.unshift(issueItemObject);
+};
 SavedIssueListController.prototype.reloadData = function () {
     var that = this;
     dataManager.fetchSavedIssueItems().then(function (fileList) {
@@ -57,8 +62,8 @@ SavedIssueListController.prototype.loadView = function () {
                 var data = fs.readFileSync(path.join(commentsPath, "comments.json"), "utf-8");
                 var comments = JSON.parse(data);
                 that.clickHandeler({
-                    rootIssue: new RootIssueModel(object.rootIssue),
-                    comments: new CommentsModel(comments)
+                    rootIssue: object.rootIssue,
+                    comments: comments
                 });
             }
         },

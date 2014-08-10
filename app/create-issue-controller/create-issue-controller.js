@@ -26,7 +26,11 @@ CreateIssueController.prototype.loadView = function () {
             createIssue: function () {
                 assert(typeof that.createIssueHandler === "function");
                 issueCounter.increment();
-                var rootIssue = new RootIssue({
+                /**
+                 *
+                 * @type {rootIssueObject}
+                 */
+                var rootIssue = {
                     "user": {
                         "login": "user-name",
                         "avatar_url": "https://avatars.githubusercontent.com/u/19714?v=2"
@@ -36,8 +40,14 @@ CreateIssueController.prototype.loadView = function () {
                     id: "local-" + issueCounter.getCount(),
                     "created_at": new Date(),
                     "updated_at": new Date()
-                });
-                that.createIssueHandler(rootIssue);
+                };
+                /**
+                 * @type {IssueItemObject}
+                 */
+                var itemObject = {
+                    rootIssue: rootIssue
+                };
+                that.createIssueHandler(itemObject);
             }
         },
         components: {

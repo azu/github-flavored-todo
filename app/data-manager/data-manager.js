@@ -1,15 +1,12 @@
 "use strict";
 /**
- * @typedef {{rootIssue: RootIssueModel, comments : CommentsModel}} IssueItemObject
+ * @typedef {{rootIssue: rootIssueObject, comments : [commentObject]|null, dirPath: string|null}} IssueItemObject
  */
 var fs = require("fs-extra");
 var path = require("path");
 var FS = require("q-io/fs");
 var Promise = require("bluebird");
 var storage = (typeof localStorage !== "undefined") ? localStorage : null;
-var RootIssueModel = require("../issue-controller/model/RootIssue-model");
-var CommentsModel = require("../issue-controller/model/Comments-model");
-
 function fetchSavedIssueItems() {
     var filterNonExistJSON = function (dirList) {
         var promiseMap = Promise.filter(dirList, function (dirPath) {
@@ -97,7 +94,7 @@ function readData(dirPath) {
             if (error) {
                 reject(error);
             } else {
-                resolve(new CommentsModel(JSON.parse(data)));
+                resolve(JSON.parse(data));
             }
         });
     });
@@ -107,7 +104,7 @@ function readData(dirPath) {
             if (error) {
                 reject(error);
             } else {
-                resolve(new RootIssueModel(JSON.parse(data)));
+                resolve(JSON.parse(data));
             }
         });
     });
@@ -117,7 +114,8 @@ function readData(dirPath) {
          */
         return {
             comments: results[0],
-            rootIssue: results[1]
+            rootIssue: results[1],
+            dirPath: dirPath
         }
     });
 

@@ -17,8 +17,6 @@ savedIssueListController.addClickHandler(function (issueItemObject) {
 // header
 var CreateIssueController = require("./create-issue-controller/create-issue-controller");
 var createIssueController = new CreateIssueController();
-createIssueController.addCreateIssueHandler(function (rootIssueObject) {
-    issueController.updateWithIssueItemObject({
-        rootIssue: rootIssueObject
-    });
+createIssueController.addCreateIssueHandler(function (itemObject) {
+    issueController.updateWithIssueItemObject(itemObject);
 });

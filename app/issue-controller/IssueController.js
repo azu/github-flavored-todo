@@ -18,8 +18,8 @@ function IssueController() {
  * @param {IssueItemObject} data
  */
 IssueController.prototype.updateWithIssueItemObject = function (data) {
-    var rootIssue = data.rootIssue && data.rootIssue.getRawData();
-    var commentsModel = data.comments ? data.comments.getRawData() : [];
+    var rootIssue = data.rootIssue;
+    var commentsModel = data.comments ? data.comments : [];
     var that = this;
     this.silentUpdate(function () {
         that.viewController.$set("rootIssue", rootIssue);

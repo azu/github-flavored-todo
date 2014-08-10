@@ -1,5 +1,5 @@
 "use strict";
-var issueHeadObject = {
+var rootIssueObject = {
     "user": {
         "login": "user-name",
         "avatar_url": "https://avatars.githubusercontent.com/u/19714?v=2"

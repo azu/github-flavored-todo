@@ -18,8 +18,8 @@ describe("data-manager", function () {
     var issueItemObject;
     beforeEach(function (done) {
         issueItemObject = {
-            rootIssue: new RootIssueModel,
-            comments: new CommentsModel
+            rootIssue: {},
+            comments: []
         };
         storage = new MockStorage();
         dataManager.changeStorage(storage);
