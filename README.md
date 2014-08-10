@@ -12,6 +12,10 @@ It's todo app inspired GitHub Issue.
 
 - [ ] Write usage instructions
 
+## Develop
+
+See [Design Doc](/doc).
+
 ## Contributing
 
 1. Fork it!
