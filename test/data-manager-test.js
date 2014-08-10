@@ -60,16 +60,17 @@ describe("data-manager", function () {
                 });
             });
         });
-
         context("when exist path", function () {
             beforeEach(function () {
                 return dataManager.writeData(tmpDir, issueItemObject);
             });
             it("should return issueItemObject", function () {
-                var issueItemObject = dataManager.readData(tmpDir);
-                assert(typeof issueItemObject === "object");
-                assert(issueItemObject.comments != null);
-                assert(issueItemObject.rootIssue != null);
+                var promise = dataManager.readData(tmpDir);
+                return shouldFulfilled(promise).then(function (object) {
+                    assert(typeof object === "object");
+                    assert(object.comments != null);
+                    assert(object.rootIssue != null);
+                });
             });
         });
     });

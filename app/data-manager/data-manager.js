@@ -6,18 +6,22 @@ var fs = require("fs");
 var path = require("path");
 var Promise = require("bluebird");
 var storage = (typeof localStorage !== "undefined") ? localStorage : null;
+var RootIssueModel = require("../issue-controller/model/RootIssue-model");
+var CommentsModel = require("../issue-controller/model/Comments-model");
 /**
  * save issueItemObject
  * issue.json and comments.json
  * @param {string} dirPath directory path
  * @param {IssueItemObject} issueItemObject
+ * @returns {Promise}
  */
 function writeData(dirPath, issueItemObject) {
     storage.setItem(dirPath, {
         "last-modified": new Date()
     });
     var commentsPromise = new Promise(function (resolve, reject) {
-        fs.writeFile(path.join(dirPath, "comments.json"), issueItemObject.comments, function (error, data) {
+        var commentsPath = path.join(dirPath, "comments.json");
+        fs.writeFile(commentsPath, issueItemObject.comments, function (error, data) {
             if (error) {
                 reject(error);
             } else {
@@ -26,7 +30,8 @@ function writeData(dirPath, issueItemObject) {
         });
     });
     var issuePromise = new Promise(function (resolve, reject) {
-        fs.writeFile(path.join(dirPath, "issue.json"), issueItemObject.rootIssue, function (error, data) {
+        var issuePath = path.join(dirPath, "issue.json");
+        fs.writeFile(issuePath, issueItemObject.rootIssue, function (error, data) {
             if (error) {
                 reject(error);
             } else {
@@ -41,10 +46,39 @@ function writeData(dirPath, issueItemObject) {
 /**
  * read IssueItemObject
  * @param {string} dirPath directory path
- * @returns {IssueItemObject}
+ * @returns {Promise}
  */
 function readData(dirPath) {
-    return {};
+    var commentsPromise = new Promise(function (resolve, reject) {
+        var commentsPath = path.join(dirPath, "comments.json");
+        fs.readFile(commentsPath, function (error, data) {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(new CommentsModel(JSON.parse(data)));
+            }
+        });
+    });
+    var issuePromise = new Promise(function (resolve, reject) {
+        var issuePath = path.join(dirPath, "issue.json");
+        fs.readFile(issuePath, function (error, data) {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(new RootIssueModel(JSON.parse(data)));
+            }
+        });
+    });
+    return Promise.all([commentsPromise, issuePromise]).then(function (results) {
+        /**
+         * @type {IssueItemObject}
+         */
+        return {
+            comments: results[0],
+            rootIssue: results[1]
+        }
+    });
+
 }
 
 function changeStorage(storageObject) {
