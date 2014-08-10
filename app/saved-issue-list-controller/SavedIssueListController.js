@@ -1,5 +1,8 @@
 "use strict";
 var Vue = require("vue");
+var FS = require("q-io/fs");
+var Promise = require("bluebird");
+var dataManager = require("../data-manager/data-manager");
 function SavedIssueListController() {
     /**
      * @type {Vue|null}
@@ -9,8 +12,16 @@ function SavedIssueListController() {
     this.reloadData();
 }
 SavedIssueListController.prototype.reloadData = function () {
-    var issue = require("../../data/local/1/issue.json");
-    this.viewController.rootIssueList.push(issue);
+    var that = this;
+    dataManager.fetchSavedIssueItems().then(function (fileList) {
+        return Promise.all(fileList.map(function (filePath) {
+            return FS.read(filePath).then(JSON.parse);
+        }));
+    }).then(function(issueList){
+        that.viewController.rootIssueList = issueList;
+    }).catch(function(error){
+        console.log(error);
+    });
 };
 SavedIssueListController.prototype.loadView = function () {
     this.viewController = new Vue({
