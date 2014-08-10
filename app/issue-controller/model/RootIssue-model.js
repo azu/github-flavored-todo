@@ -14,6 +14,9 @@ var issueHeadObject = {
 function RootIssueModel() {
     this.issueHead = issueHeadObject;
 }
+RootIssueModel.prototype.toString = function () {
+    return JSON.stringify(this.issueHead);
+};
 RootIssueModel.prototype.getRawData = function () {
     return this.issueHead;
 };

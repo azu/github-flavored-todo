@@ -16,6 +16,9 @@ function CommentsModel() {
 CommentsModel.prototype.getRawData = function () {
     return this.comments;
 };
+CommentsModel.prototype.toString = function () {
+    return JSON.stringify(this.comments);
+};
 /**
  * adding comment object to list
  * @param {commentObject} comment

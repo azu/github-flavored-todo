@@ -17,11 +17,11 @@ function IssueController() {
 }
 /**
  *
- * @param {{rootIssue: RootIssueModel, commentsModel : CommentsModel}} data
+ * @param {IssueItemObject} data
  */
 IssueController.prototype.updateWithTuple = function (data) {
     var rootIssue = data.rootIssue;
-    var commentsModel = data.commentsModel;
+    var commentsModel = data.comments;
     this.viewController.comments = commentsModel.getRawData();
     this.viewController.rootIssue = rootIssue.getRawData();
 };
