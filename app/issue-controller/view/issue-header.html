@@ -1,8 +1,37 @@
+<style>
+    .gh-issue-edit {
+        position: relative;
+        margin: 0;
+        width: 100%;
+        font-size: 24px;
+        font-family: inherit;
+        line-height: 1.4em;
+        outline: none;
+        color: inherit;
+        padding: 6px;
+        border: 1px solid #999;
+        box-shadow: inset 0 -1px 5px 0 rgba(0, 0, 0, 0.2);
+        -moz-box-sizing: border-box;
+        -ms-box-sizing: border-box;
+        -o-box-sizing: border-box;
+        box-sizing: border-box;
+        -webkit-font-smoothing: antialiased;
+        -moz-font-smoothing: antialiased;
+        -ms-font-smoothing: antialiased;
+        -o-font-smoothing: antialiased;
+        font-smoothing: antialiased;
+    }
+
+</style>
 <div class="gh-header-show">
     <h1 class="gh-header-title">
-        <span class="js-issue-title">{{title}}</span>
+        <span class="js-issue-title" v-show="this != editedIssue">{{title}}</span>
+        <input class="gh-issue-edit" type="text" v-model="title"
+               v-show="this == editedIssue"
+               v-todo-focus="this == editedIssue"
+               v-on="blur: doneEdit(this), keyup: doneEdit(this) | key enter, keyup: cancelEdit(this) | key esc">
     </h1>
     <div class="gh-header-actions">
-        <button type="button" class="minibutton js-details-target">Edit</button>
+        <button type="button" class="minibutton js-details-target" v-on="click:editTitle(this)">Edit</button>
     </div>
 </div>
