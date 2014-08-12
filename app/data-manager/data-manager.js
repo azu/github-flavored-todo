@@ -60,7 +60,7 @@ function writeData(dirPath, issueItemObject) {
     updateLastModified(dirPath);
     var commentsPromise = new Promise(function (resolve, reject) {
         var commentsPath = path.join(dirPath, "comments.json");
-        fs.outputFile(commentsPath, issueItemObject.comments, function (error, data) {
+        fs.outputJSON(commentsPath, issueItemObject.comments, function (error, data) {
             if (error) {
                 reject(error);
             } else {
@@ -70,7 +70,7 @@ function writeData(dirPath, issueItemObject) {
     });
     var issuePromise = new Promise(function (resolve, reject) {
         var issuePath = path.join(dirPath, "issue.json");
-        fs.outputFile(issuePath, issueItemObject.rootIssue, function (error, data) {
+        fs.outputJSON(issuePath, issueItemObject.rootIssue, function (error, data) {
             if (error) {
                 reject(error);
             } else {
