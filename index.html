@@ -19,10 +19,12 @@
     </div>
     <div id="js-main-content" class="main-content">
         <header>
-            <div v-component="issue-header" v-with="rootIssue"></div>
+            <div v-component="issue-header" v-with="issueItemObject.rootIssue"></div>
         </header>
-        <article v-component="comment" v-with="rootIssue"></article>
-        <article v-component="comment" v-repeat="comments"></article>
+        <aside>
+        </aside>
+        <article v-component="comment" v-with="issueItemObject.rootIssue"></article>
+        <article v-component="comment" v-repeat="issueItemObject.comments || []"></article>
     </div>
 </div>
 <script src="app/debug-controller/debug-controller.js"></script>

@@ -4,7 +4,6 @@ var CodeMirror = require("codemirror");
 var Promise = require("bluebird");
 require('codemirror/mode/markdown/markdown');
 var marked = require("./lib/marked-nit");
-var CommentsModel = require("./model/Comments-model");
 var dataManager = require("../data-manager/data-manager");
 function IssueController() {
     /**
@@ -18,36 +17,26 @@ function IssueController() {
  * @param {IssueItemObject} data
  */
 IssueController.prototype.updateWithIssueItemObject = function (data) {
-    var rootIssue = data.rootIssue;
-    var commentsModel = data.comments ? data.comments : [];
     var that = this;
     this.silentUpdate(function () {
-        that.viewController.$set("rootIssue", rootIssue);
-        that.viewController.$set("comments", commentsModel);
+        that.viewController.$set("issueItemObject", data);
     });
 };
 IssueController.prototype.registerSaveObserve = function (vm) {
     function saveData() {
-        var rootIssue = vm.$data.rootIssue;
-        var comments = vm.$data.comments;
-        dataManager.writeData("./data/local/" + rootIssue.id, {
-            rootIssue: JSON.stringify(rootIssue),
-            comments: JSON.stringify(comments)
-        }).catch(function (error) {
+        var issueItemObject = vm.$data.issueItemObject;
+        var rootIssue = issueItemObject.rootIssue;
+        dataManager.writeData("./data/local/" + rootIssue.id, issueItemObject).catch(function (error) {
             console.log(error);
         });
     }
 
-    vm.$watch('rootIssue', function (value) {
-        saveData();
-    });
-    vm.$watch('comments', function (value) {
+    vm.$watch('issueItemObject', function (value) {
         saveData();
     });
 };
 IssueController.prototype.silentUpdate = function (action) {
-    this.viewController.$unwatch("rootIssue");
-    this.viewController.$unwatch("comments");
+    this.viewController.$unwatch("issueItemObject");
     action();
     this.registerSaveObserve(this.viewController);
 };
@@ -58,8 +47,10 @@ IssueController.prototype.loadView = function () {
         data: {
             "editedIssue": null,
             "editingComments": [],
-            "rootIssue": {},
-            "comments": []
+            "issueItemObject": {
+                "rootIssue":{},
+                "comments":[]
+            }
         },
         ready: function () {
             that.registerSaveObserve(this);
