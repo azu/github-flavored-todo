@@ -30,8 +30,13 @@ IssueController.prototype.registerSaveObserve = function (vm) {
             console.log(error);
         });
     }
-
+    function collectTodo(){
+        var collect = require("./util/collect-todo");
+        var rootTodo = collect(vm.$data.issueItemObject.rootIssue.body);
+        vm.collectionTodo = rootTodo;
+    }
     vm.$watch('issueItemObject', function (value) {
+        collectTodo();
         saveData();
     });
 };
@@ -48,9 +53,10 @@ IssueController.prototype.loadView = function () {
             "editedIssue": null,
             "editingComments": [],
             "issueItemObject": {
-                "rootIssue":{},
-                "comments":[]
-            }
+                "rootIssue": {},
+                "comments": []
+            },
+            "collectionTodo": []
         },
         ready: function () {
             that.registerSaveObserve(this);
@@ -128,7 +134,8 @@ IssueController.prototype.loadView = function () {
         },
         components: {
             "issue-header": require("./vue-component/issue-header"),
-            "comment": require("./vue-component/comment-component")
+            "comment": require("./vue-component/comment-component"),
+            "collection-todo": require("./vue-component/collection-todo")
         }
     });
 };

@@ -22,6 +22,9 @@
             <div v-component="issue-header" v-with="issueItemObject.rootIssue"></div>
         </header>
         <aside>
+            <ul>
+                <li class="" v-component="collection-todo" v-repeat="collectionTodo"></li>
+            </ul>
         </aside>
         <article v-component="comment" v-with="issueItemObject.rootIssue"></article>
         <article v-component="comment" v-repeat="issueItemObject.comments || []"></article>

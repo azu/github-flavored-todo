@@ -1,0 +1,16 @@
+{
+  "user": {
+    "login": "user-name",
+    "avatar_url": "https://avatars.githubusercontent.com/u/19714?v=2"
+  },
+  "title": "今週のタスク２",
+  "body": "- [ ] ルナノートの修正\n- [ ] まま広場の実装",
+  "id": "local-3",
+  "created_at": {},
+  "updated_at": {},
+  "labels": [],
+  "milestone": {
+    "creator": {}
+  },
+  "closed_by": {}
+}
